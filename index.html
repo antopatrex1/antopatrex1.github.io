@@ -1,477 +1,103 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Anto Patrex — founder and engineer. Teleoperation, video-to-robot pipelines and supervised humanoid deployments at CosmicBrain AI.">
-<meta name="theme-color" content="#090B0E">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23090B0E'/%3E%3Cpath d='M7 24 L13 15 L19 19 L25 8' stroke='%23FFB02E' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='25' cy='8' r='3' fill='%23FFB02E'/%3E%3C/svg%3E">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Anto Patrex">
-<meta property="og:description" content="Founder and engineer. Teleoperation, video-to-robot pipelines and supervised humanoid deployments.">
-<meta name="twitter:card" content="summary">
-<style>
-  *, *::before, *::after { box-sizing: border-box; }
-  html { color-scheme: dark; }
-  body { margin: 0; }
-  img { max-width: 100%; }
-  [hidden] { display: none !important; }
-</style>
-<title>Anto Patrex</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
-
-<style>
-  :root {
-    --ground:   #090B0E;
-    --panel:    #10141A;
-    --panel-2:  #151A21;
-    --ink:      #E8EDF2;
-    --ink-soft: #A9B4C0;
-    --muted:    #6C7885;
-    --dim:      #454F5A;
-    --edge:     #1C232B;
-    --edge-hi:  #2B343E;
-    --amber:    #FFB02E;
-    --amber-dim:#7A5410;
-    --amber-glow: rgba(255,176,46,0.13);
-
-    --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
-    --f-body: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
-    --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  }
-
-  body {
-    background: var(--ground);
-    background-image:
-      linear-gradient(var(--edge) 1px, transparent 1px),
-      linear-gradient(90deg, var(--edge) 1px, transparent 1px);
-    background-size: 56px 56px;
-    background-position: -1px -1px;
-    color: var(--ink);
-    font-family: var(--f-body);
-    font-size: 16px;
-    line-height: 1.62;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .wrap { max-width: 940px; margin: 0 auto; padding: 0 24px 100px; }
-
-  a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--amber-dim); }
-  a:hover { color: var(--amber); border-bottom-color: var(--amber); }
-  a:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
-
-  .mono { font-family: var(--f-mono); }
-
-  /* ---------- masthead ---------- */
-
-  .top {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 20px 0 18px; border-bottom: 1px solid var(--edge-hi);
-    font-family: var(--f-mono); font-size: 10.5px;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-    gap: 16px; flex-wrap: wrap;
-  }
-  .top .who { color: var(--amber); font-weight: 600; }
-  .top .st { display: flex; align-items: center; gap: 7px; }
-  .top .social { display: flex; align-items: center; gap: 13px; }
-  .top .social a { border-bottom: none; display: flex; color: var(--muted); }
-  .top .social a:hover { color: var(--amber); }
-  .top .social svg { width: 15px; height: 15px; display: block; fill: currentColor; }
-  .dot { width: 6px; height: 6px; background: var(--amber); border-radius: 50%; box-shadow: 0 0 8px var(--amber); flex: none; }
-
-  /* ---------- hero ---------- */
-
-  .hero {
-    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: 40px; padding: 52px 0 46px; align-items: center;
-  }
-  @media (max-width: 800px) { .hero { grid-template-columns: 1fr; gap: 30px; padding-top: 40px; } }
-
-  h1 {
-    font-family: var(--f-display); font-weight: 900; font-stretch: 125%;
-    font-size: clamp(2.15rem, 5.6vw, 3.35rem);
-    line-height: 0.95; letter-spacing: -0.035em; text-transform: uppercase;
-    margin: 0 0 20px; text-wrap: balance;
-  }
-  h1 em { font-style: normal; color: var(--amber); }
-  .lede { font-size: 1.05rem; color: var(--ink-soft); margin: 0; max-width: 46ch; }
-
-  .rig { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--edge-hi); background: var(--panel); }
-  .rig-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 12px; border-bottom: 1px solid var(--edge-hi);
-    font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--muted);
-  }
-  canvas { display: block; width: 100%; height: 268px; }
-  .rig-read {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--edge-hi);
-  }
-  .jt { padding: 9px 10px; border-left: 1px solid var(--edge); display: flex; flex-direction: column; gap: 2px; }
-  .jt:first-child { border-left: none; }
-  .jt .n { font-family: var(--f-mono); font-size: 8.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
-  .jt .d { font-family: var(--f-mono); font-size: 13px; font-weight: 600; color: var(--amber); font-variant-numeric: tabular-nums; }
-
-  /* ---------- spec strip ---------- */
-
-  .strip {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border: 1px solid var(--edge-hi); background: var(--panel);
-  }
-  @media (max-width: 640px) { .strip { grid-template-columns: repeat(2, 1fr); } }
-  .sp { padding: 15px 16px; border-left: 1px solid var(--edge); display: flex; flex-direction: column; gap: 3px; }
-  .sp:first-child { border-left: none; }
-  @media (max-width: 640px) { .sp:nth-child(3) { border-left: none; } .sp:nth-child(3), .sp:nth-child(4) { border-top: 1px solid var(--edge); } }
-  .sp .v { font-family: var(--f-mono); font-size: 1.15rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .sp .v i { font-style: normal; color: var(--amber); font-weight: 500; font-size: 0.78em; }
-  .sp .l { font-family: var(--f-mono); font-size: 8.8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-
-  /* ---------- sections ---------- */
-
-  section { padding-top: 58px; }
-  .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; }
-  .tag {
-    font-family: var(--f-mono); font-size: 9.5px; font-weight: 600;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--ground);
-    background: var(--amber); padding: 3px 7px; flex: none;
-  }
-  h2 {
-    font-family: var(--f-display); font-weight: 800; font-stretch: 112%;
-    font-size: clamp(1.35rem, 3.2vw, 1.7rem);
-    letter-spacing: -0.02em; text-transform: uppercase; margin: 0; text-wrap: balance;
-  }
-
-  .prose { display: flex; flex-direction: column; gap: 15px; max-width: 68ch; }
-  .prose p { margin: 0; color: var(--ink-soft); }
-  .prose b { font-weight: 600; color: var(--ink); }
-
-  /* ---------- build modules ---------- */
-
-  .mods { display: flex; flex-direction: column; gap: 14px; }
-  .mod { border: 1px solid var(--edge-hi); background: var(--panel); }
-  .mod-bar {
-    display: flex; justify-content: space-between; align-items: center; gap: 14px;
-    padding: 11px 16px; border-bottom: 1px solid var(--edge-hi); background: var(--panel-2);
-    flex-wrap: wrap;
-  }
-  .mod-bar h3 { font-family: var(--f-display); font-weight: 800; font-stretch: 112%; font-size: 1rem; letter-spacing: -0.01em; text-transform: uppercase; margin: 0; }
-  .mod-bar .cls { font-family: var(--f-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }
-  .mod-body { padding: 15px 16px 17px; display: flex; flex-direction: column; gap: 12px; }
-  .mod-body p { margin: 0; font-size: 15px; color: var(--ink-soft); line-height: 1.58; }
-  .rows { display: flex; flex-direction: column; }
-  .rw {
-    display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px;
-    padding: 6px 0; border-top: 1px solid var(--edge);
-    font-family: var(--f-mono); font-size: 11.5px; line-height: 1.6;
-  }
-  .rw .a { color: var(--dim); letter-spacing: 0.09em; text-transform: uppercase; font-size: 9px; padding-top: 2px; }
-  .rw .b { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
-  @media (max-width: 560px) { .rw { grid-template-columns: 1fr; gap: 1px; } }
-
-  /* ---------- track ---------- */
-
-  .track { border: 1px solid var(--edge-hi); background: var(--panel); }
-  .stop { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 20px; padding: 16px; border-top: 1px solid var(--edge); }
-  .stop:first-child { border-top: none; }
-  .stop.live { background: linear-gradient(90deg, var(--amber-glow), transparent 55%); }
-  .yr { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; padding-top: 4px; white-space: nowrap; }
-  .stop.live .yr { color: var(--amber); }
-  .en h3 { font-family: var(--f-display); font-weight: 800; font-stretch: 112%; font-size: 0.98rem; text-transform: uppercase; letter-spacing: -0.005em; margin: 0 0 2px; }
-  .en .org { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
-  .en p { margin: 6px 0 0; font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
-  @media (max-width: 560px) { .stop { grid-template-columns: 1fr; gap: 6px; } .yr { padding-top: 0; } }
-
-  /* ---------- foot ---------- */
-
-  .foot { margin-top: 60px; border-top: 1px solid var(--edge-hi); padding-top: 20px; display: flex; flex-direction: column; gap: 14px; }
-  .links { display: flex; flex-wrap: wrap; gap: 8px 24px; font-family: var(--f-mono); font-size: 12px; }
-  .colo { font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); line-height: 1.9; }
-
-  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Hi, I’m Anto Patrex — founder of CosmicBrain AI. I build at the intersection of robotics, AI, and the physical world. Based in San Francisco.">
+  <meta name="theme-color" content="#f6f3eb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Anto Patrex — Curiosity, robots & the physical world">
+  <meta property="og:description" content="Founder, engineer, and lifelong tinkerer. Building the data and deployment stack for Physical AI at CosmicBrain.">
+  <meta property="og:url" content="https://antopatrex1.github.io/">
+  <meta name="twitter:card" content="summary">
+  <link rel="canonical" href="https://antopatrex1.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <title>Anto Patrex — Curiosity, robots & the physical world</title>
 </head>
 <body>
-<div class="wrap">
-
-  <div class="top">
-    <span class="who">Anto Patrex</span>
-    <span class="st"><span class="dot"></span> Founder &amp; CEO, CosmicBrain AI &middot; San Francisco</span>
-    <span class="social">
-      <a href="https://www.linkedin.com/in/antopatrex/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></a>
-      <a href="https://x.com/antopatrex1" target="_blank" rel="noopener" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <a href="https://github.com/antopatrex1" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23a11.5 11.5 0 013-.405c1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-    </span>
-  </div>
-
-  <div class="hero">
-    <div>
-      <h1>I build the layer between a model and a <em>hallway</em>.</h1>
-      <p class="lede">Teleoperation infrastructure, training-data pipelines, and supervised humanoids that work in real buildings. Previously post-training on Grok at xAI, robotics at Chabot Space Center. Sold my first company out of a dorm room. Been building robots since I was seven.</p>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="header wrap">
+  <a class="wordmark" href="#home" aria-label="Anto Patrex, home">anto patrex<span class="wordmark-dot">.</span></a>
+  <nav aria-label="Main navigation">
+    <a href="#about">About</a><a href="#work">Work</a><a href="#notebook">Notebook</a><a class="nav-contact" href="#hello">Say hello <span aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+<main id="main">
+  <section class="hero wrap" id="home" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="status-dot" aria-hidden="true"></span> SAN FRANCISCO, CA <span class="location-line" aria-hidden="true"></span> ALWAYS CURIOUS</div>
+      <h1 id="hero-title">Hi, I’m Anto.<br>I build for the<br><em>physical world.</em></h1>
+      <p class="hero-intro">Founder, engineer, and lifelong tinkerer. I’m working on a future where intelligent machines are part of everyday life.</p>
+      <div class="hero-actions"><a class="button" href="#work">What I’m building <span aria-hidden="true">↘</span></a><a class="text-link" href="#about">A little about me <span aria-hidden="true">↓</span></a></div>
+      <div class="personal-note"><img src="assets/anto-patrex.jpg" width="58" height="58" alt="Anto Patrex smiling"><span>Currently building <a href="https://cosmicbrain.ai/" target="_blank" rel="noopener noreferrer">CosmicBrain AI <span aria-hidden="true">↗</span></a><small>Robotics. Real places. Human possibilities.</small></span></div>
     </div>
-
-    <div class="rig">
-      <div class="rig-bar"><span>IK Solver &middot; 3-link planar &middot; CCD</span><span id="hz">&mdash;</span></div>
-      <canvas id="arm" width="800" height="536" aria-label="Live inverse kinematics solver reaching toward a moving target"></canvas>
-      <div class="rig-read">
-        <div class="jt"><span class="n">&theta;1</span><span class="d" id="j0">0.0&deg;</span></div>
-        <div class="jt"><span class="n">&theta;2</span><span class="d" id="j1">0.0&deg;</span></div>
-        <div class="jt"><span class="n">&theta;3</span><span class="d" id="j2">0.0&deg;</span></div>
-        <div class="jt"><span class="n">Err</span><span class="d" id="er">0.0</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="strip">
-    <div class="sp"><span class="v">500<i>Hz</i></span><span class="l">Control loop</span></div>
-    <div class="sp"><span class="v">26<i>DoF</i></span><span class="l">Full-body rig</span></div>
-    <div class="sp"><span class="v">21<i>pts</i></span><span class="l">Per hand</span></div>
-    <div class="sp"><span class="v">77<i>jt</i></span><span class="l">Retarget skeleton</span></div>
-  </div>
-
-  <section>
-    <div class="head"><span class="tag">Built</span><h2>Systems</h2></div>
-    <div class="mods">
-
-      <div class="mod">
-        <div class="mod-bar"><h3>MimicXR</h3><span class="cls">VR teleoperation stack</span></div>
-        <div class="mod-body">
-          <p>Full-body VR teleoperation for the Unitree G1 with BrainCo five-finger hands and a Meta Quest 3. Written against the latency budget real control demands, not the one a demo video tolerates.</p>
-          <div class="rows">
-            <div class="rw"><span class="a">Control</span><span class="b">500 Hz loop, lock-free shared-memory ring buffers</span></div>
-            <div class="rw"><span class="a">Kinematics</span><span class="b">Warm-started differential IK via Pinocchio</span></div>
-            <div class="rw"><span class="a">Filtering</span><span class="b">One Euro filter, predictive latency compensation</span></div>
-            <div class="rw"><span class="a">Recording</span><span class="b">LeRobot-compatible episode recorder</span></div>
-            <div class="rw"><span class="a">Target</span><span class="b">ROS2 / Jetson Orin NX onboard</span></div>
-            <div class="rw"><span class="a">Scale</span><span class="b">79 files, Python</span></div>
-          </div>
+    <figure class="hero-art">
+      <span class="margin-note note-top" aria-hidden="true">ideas → experiments → reality</span>
+      <img src="assets/workshop-robot.webp" alt="Graphite and watercolor illustration of a friendly robot waving from an engineering workbench" width="1536" height="1024" fetchpriority="high">
+      <span class="equation equation-one" aria-hidden="true">τ = JᵀF</span><span class="equation equation-two" aria-hidden="true">x = f(q)</span>
+      <figcaption><span class="caption-line" aria-hidden="true"></span> A little imagination from the workbench.</figcaption>
+    </figure>
+  </section>
+  <div class="chapter-divider wrap"><span>01 / A LITTLE CONTEXT</span><span>HUMAN FIRST. ENGINEER AT HEART.</span></div>
+  <section class="about wrap section" id="about" aria-labelledby="about-title">
+    <div><p class="eyebrow">THE PERSON BEHIND THE ROBOTS</p><h2 id="about-title">It started with<br><em>taking things apart.</em></h2><p class="handwritten">Still asking “what if?”</p></div>
+    <div class="about-copy"><p class="lead">I’ve been building robots since I was seven. My mother is a physics professor; circuit boards were on the kitchen table before homework was.</p><p>That curiosity has taken me from building a company in a dorm room to space engineering, Formula 1, and post-training data for Grok at xAI. Today, it’s what drives my work at CosmicBrain AI.</p><p>I’m drawn to the place where software meets something you can touch. An idea becomes a mechanism. A model becomes motion. Something that lived in a notebook starts working in the world.</p><p>I want to build technology that advances humanity, and I like meeting people who are asking big questions and getting their hands dirty finding the answers.</p><a class="text-link" href="https://www.linkedin.com/in/antopatrex/" target="_blank" rel="noopener noreferrer">The longer story on LinkedIn <span aria-hidden="true">↗</span></a></div>
+  </section>
+  <section class="work-section" id="work" aria-labelledby="work-title">
+    <div class="wrap section">
+      <div class="section-heading"><div><p class="eyebrow">02 / ON MY WORKBENCH</p><h2 id="work-title">From human intent<br>to <em>robot motion.</em></h2></div><p>I’m interested in the whole loop:<br>how robots learn, move, and improve.</p></div>
+      <article class="featured-work">
+        <div class="work-main"><span class="work-label"><span class="status-dot" aria-hidden="true"></span> CURRENT CHAPTER · FOUNDER & CEO</span><h3>CosmicBrain AI</h3><p>Building the data and deployment stack behind Physical AI — connecting teleoperation, training data, and the practical work of bringing robots into real environments.</p><div class="tags"><span>Physical AI</span><span>Teleoperation</span><span>Robot learning</span></div><a class="text-link" href="https://cosmicbrain.ai/" target="_blank" rel="noopener noreferrer">Meet CosmicBrain <span aria-hidden="true">↗</span></a></div>
+        <div class="loop-diagram" aria-label="Robot learning loop: human intent, robot motion, real-world feedback, and better training data">
+          <div class="loop-title">THE LOOP I CARE ABOUT</div>
+          <div class="loop-row"><span class="step-number">01</span><span>Human intent</span><span class="loop-detail">teach & guide</span></div><div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="loop-row"><span class="step-number">02</span><span>Robot motion</span><span class="loop-detail">perceive & act</span></div><div class="flow-arrow" aria-hidden="true">↓</div>
+          <div class="loop-row"><span class="step-number">03</span><span>Real-world feedback</span><span class="loop-detail">observe & learn</span></div>
+          <p class="loop-back"><span aria-hidden="true">↳</span> better data, better next attempt <span aria-hidden="true">↺</span></p>
         </div>
+      </article>
+      <div class="work-rows">
+        <article class="work-row"><span class="row-index">A</span><div><h3>Giving a robot a human point of view.</h3><p>MimicXR: exploring VR teleoperation, motion retargeting, and the control systems that turn a person’s movements into robot commands.</p></div><span class="row-type">CONTROL & TELEOP</span></article>
+        <article class="work-row"><span class="row-index">B</span><div><h3>Making demonstrations useful.</h3><p>Video-to-robot pipelines: extracting motion, mapping it to a robot’s body, and turning demonstrations into structured training episodes.</p></div><span class="row-type">DATA & LEARNING</span></article>
+        <article class="work-row"><span class="row-index">C</span><div><h3>Bringing the real world into simulation.</h3><p>A recent hackathon experiment combining RealSense depth capture, scene reconstruction, and a robot digital twin.</p><a class="text-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7503276356877701120/" target="_blank" rel="noopener noreferrer">See the experiment <span aria-hidden="true">↗</span></a></div><span class="row-type">REAL → SIM → REAL</span></article>
       </div>
-
-      <div class="mod">
-        <div class="mod-bar"><h3>Video-to-Robot pipeline</h3><span class="cls">Training data infrastructure</span></div>
-        <div class="mod-body">
-          <p>Turns raw egocentric video into trainable motion without a room full of annotators. Most collected video is unusable. This is the layer that finds the fraction that isn't and makes it count.</p>
-          <div class="rows">
-            <div class="rw"><span class="a">Pose</span><span class="b">GEM-X extraction, RTMW3D hand tracking, SOMA fusion</span></div>
-            <div class="rw"><span class="a">Skeleton</span><span class="b">77-joint body rig, 21 keypoints per hand</span></div>
-            <div class="rw"><span class="a">Cleanup</span><span class="b">Temporal filtering, occlusion infill via internal world model</span></div>
-            <div class="rw"><span class="a">Retarget</span><span class="b">2D video to 3D mesh, human morphology to robot morphology</span></div>
-            <div class="rw"><span class="a">Throughput</span><span class="b">GPU-parallel annotation, single-machine</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mod">
-        <div class="mod-bar"><h3>Fleet data layer</h3><span class="cls">Deployment telemetry</span></div>
-        <div class="mod-body">
-          <p>Every actuator, joint sensor and haptic channel on a deployed robot, time-aligned against operator video. Instrumented from the first hour, because the whole thesis rests on this asset and you cannot backfill it.</p>
-          <div class="rows">
-            <div class="rw"><span class="a">Capture</span><span class="b">Per-joint torque, encoder, millivolt-level sensor state</span></div>
-            <div class="rw"><span class="a">Alignment</span><span class="b">JSON telemetry against operator video, frame-synced</span></div>
-            <div class="rw"><span class="a">Transfer</span><span class="b">Real-to-sim and sim-to-real round trip</span></div>
-            <div class="rw"><span class="a">Metric</span><span class="b">Operator intervention per task, logged per deployment</span></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
-
-  <section>
-    <div class="head"><span class="tag">Thesis</span><h2>Why most of physical AI is going the wrong way</h2></div>
-    <div class="prose">
-      <p>The dominant bet is that a big enough model trained on enough egocentric video produces a general-purpose robot. Hundreds of millions are going into it. I think it's wrong, and the evidence is already visible to anyone willing to look at a deployment instead of a benchmark.</p>
-      <p>Lab accuracy does not survive contact with a building. A policy that performs beautifully on a bench fails in a corridor, because the corridor has a wet floor sign, a resident with a stroller, an elevator that closes early, and a parcel shaped like nothing in the training set. <b>Divergence from the expected isn't an edge case out there. It's the entire job.</b></p>
-      <p>Nobody solved hard autonomy in simulation. Waymo spent fourteen years driving. Zoox built its competence around forensics on what went wrong in the field. Both got there by deploying imperfect systems under supervision and closing the loop on every failure. That path is open in robotics right now and almost nobody is walking it.</p>
-      <p>So invert the sequence. Put robots into real environments now, keep a human in the loop so nothing unsafe happens while they're still bad, and let deployment data compound. Humanoids belong first in semi-private space, hotels and apartment buildings, because that's the closest thing to a home that still has an operator, a budget, and a reason to care.</p>
-      <p>The useful consequence: scaling laws haven't landed in physical AI yet, which means a seed-stage company and a billion-dollar lab are on genuinely level ground. <b>What decides it isn't compute. It's who gets robots into buildings first and learns fastest from what breaks.</b></p>
+  <section class="play-section wrap section" aria-labelledby="play-title">
+    <div class="play-copy"><p class="eyebrow">A SMALL DETOUR</p><h2 id="play-title">A little math.<br><em>A little movement.</em></h2><p>Two links, two angles, one moving point. This is forward kinematics: a small piece of the math that connects a robot’s joints to the world.</p><p>Move the sliders and watch the arm follow. No big model needed — just geometry.</p><div class="equation-block" aria-label="x equals L1 cosine theta1 plus L2 cosine theta1 plus theta2. y equals L1 sine theta1 plus L2 sine theta1 plus theta2."><span>x = L₁ cos θ₁ + L₂ cos(θ₁ + θ₂)</span><span>y = L₁ sin θ₁ + L₂ sin(θ₁ + θ₂)</span></div><a class="math-source" href="https://modernrobotics.northwestern.edu/nu-gm-book-resource/4-1-1-product-of-exponentials-formula-in-the-space-frame/" target="_blank" rel="noopener noreferrer">More on forward kinematics <span aria-hidden="true">↗</span></a></div>
+    <div class="kinematics-panel"><div class="panel-top"><span>EXPERIMENT 001</span><span>2-LINK PLANAR ARM</span></div>
+      <svg class="arm-diagram" viewBox="0 0 500 400" role="img" aria-labelledby="arm-title arm-desc"><title id="arm-title">Interactive two-link robot arm</title><desc id="arm-desc">The arm position updates with shoulder and elbow angles. Current endpoint coordinates are shown below.</desc><defs><pattern id="graph-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M 25 0 L 0 0 0 25" fill="none" stroke="#d8ddcf" stroke-width="0.6"/></pattern></defs><rect width="500" height="400" fill="url(#graph-grid)"/><circle cx="250" cy="200" r="167" fill="none" stroke="#abb69e" stroke-dasharray="3 6"/><path d="M35 200H470 M250 18V382" fill="none" stroke="#abb69e"/><text x="471" y="221">x</text><text x="265" y="23">y</text><path id="projection" d="M 250 200 L 324 200 L 324 72" fill="none" stroke="#a45538" stroke-dasharray="4 5"/><path id="arm-link-one" d="M250 200L324 148" stroke="#425746" stroke-width="16" stroke-linecap="round"/><path id="arm-link-two" d="M324 148L324 72" stroke="#bb623f" stroke-width="12" stroke-linecap="round"/><circle cx="250" cy="200" r="11" fill="#f6f3eb" stroke="#425746" stroke-width="5"/><circle id="elbow-joint" cx="324" cy="148" r="9" fill="#f6f3eb" stroke="#425746" stroke-width="4"/><circle id="end-joint" cx="324" cy="72" r="7" fill="#bb623f"/><text id="end-label" x="336" y="59">(x, y)</text><text x="260" y="229">origin</text></svg>
+      <div class="arm-controls"><div class="range-label"><label for="shoulder">Shoulder <span>θ₁</span></label><output id="shoulder-value" for="shoulder">35°</output></div><input type="range" id="shoulder" min="-180" max="180" value="35" step="1"><div class="range-label"><label for="elbow">Elbow <span>θ₂</span></label><output id="elbow-value" for="elbow">55°</output></div><input type="range" id="elbow" min="-180" max="180" value="55" step="1"><div class="arm-readout"><span>ENDPOINT <output id="coordinates">x 1.06 · y 1.85</output></span><button id="reset-arm" type="button">Reset <span aria-hidden="true">↺</span></button></div><p class="simulation-note">Illustrative geometry · L₁ = 1.3, L₂ = 1.1 units</p></div>
     </div>
   </section>
-
-  <section>
-    <div class="head"><span class="tag">Track</span><h2>Log</h2></div>
-    <div class="track">
-
-      <div class="stop live">
-        <div class="yr">2025 &rarr; now</div>
-        <div class="en">
-          <h3>Founder &amp; CEO</h3>
-          <span class="org">CosmicBrain AI &middot; San Francisco</span>
-          <p>Humanoid robotics. Teleoperation infrastructure, training-data pipelines, and supervised deployments into residential and hospitality buildings. Backed by Long Journey Ventures.</p>
-        </div>
-      </div>
-
-      <div class="stop">
-        <div class="yr">2024&ndash;25</div>
-        <div class="en">
-          <h3>Post-training, Grok</h3>
-          <span class="org">xAI</span>
-          <p>Post-training data for frontier language models. Left when it became clear the same methods were about to meet hardware, and that nobody was building the layer in between.</p>
-        </div>
-      </div>
-
-      <div class="stop">
-        <div class="yr">2022&ndash;24</div>
-        <div class="en">
-          <h3>Space &amp; Robotics Lead</h3>
-          <span class="org">Chabot Space &amp; Science Center</span>
-          <p>Led the robotics team on NASA-affiliated work, including telescope systems used in exoplanet observation.</p>
-        </div>
-      </div>
-
-      <div class="stop">
-        <div class="yr">2021</div>
-        <div class="en">
-          <h3>Founder &rarr; acquired</h3>
-          <span class="org">Lamaara Technologies</span>
-          <p>Built an ultralight physiological monitoring system for athletes out of my dorm room. Nearly got thrown out of the dorm for it. Found a defense use case and sold the company in my senior year.</p>
-        </div>
-      </div>
-
-      <div class="stop">
-        <div class="yr">Before</div>
-        <div class="en">
-          <h3>EE &amp; Computer Science, MBA</h3>
-          <span class="org">Physics and mathematics at Cambridge</span>
-          <p>My mother is a physics professor. There were circuit boards on the kitchen table before there was homework.</p>
-        </div>
-      </div>
-
-    </div>
+  <section class="journey-section wrap section" aria-labelledby="journey-title">
+    <div class="section-heading"><div><p class="eyebrow">03 / CONNECTING THE DOTS</p><h2 id="journey-title">An intentionally<br><em>curious path.</em></h2></div><p>Different worlds.<br>The same urge to build.</p></div>
+    <ol class="timeline">
+      <li><div class="timeline-date">2025 — PRESENT</div><div class="timeline-content"><div class="timeline-top"><h3>CosmicBrain AI</h3><span class="current-tag">CURRENT</span></div><p class="role">Founder & CEO · San Francisco Bay Area</p><p>The data and deployment stack behind Physical AI.</p></div></li>
+      <li><div class="timeline-date">JAN 2024 — FEB 2025</div><div class="timeline-content"><h3>xAI</h3><p class="role">Data Engineer · Palo Alto</p><p>Post-training data for Grok 1, 2, and 3, including RLHF, reinforcement learning, data curation, and model training.</p></div></li>
+      <li><div class="timeline-date">JAN 2023 — DEC 2024</div><div class="timeline-content"><h3>Chabot Space & Science Center</h3><p class="role">Space Engineering Team Lead · Oakland</p><p>Space engineering, telescope work, and robotics projects, including work in collaboration with NASA.</p></div></li>
+      <li><div class="timeline-date">MAY — NOV 2023</div><div class="timeline-content"><h3>Aston Martin F1 Team</h3><p class="role">AI Strategy Intern · Miami</p><p>Exploring AI and safety applications with the Formula 1 team during the 2023 Miami Grand Prix.</p></div></li>
+      <li><div class="timeline-date">JAN 2021 — DEC 2022</div><div class="timeline-content"><h3>Lamaara Technologies</h3><p class="role">Co-Founder & CEO</p><p>Built smart wearable technology, raised venture funding, filed a patent, and exited the company. An early lesson in turning an idea into something real.</p></div></li>
+    </ol>
   </section>
-
-  <div class="foot">
-    <div class="links">
-      <a href="mailto:anto@cosmicbrain.ai">anto@cosmicbrain.ai</a>
-      <a href="https://cosmicbrain.ai">cosmicbrain.ai</a>
-      <a href="https://x.com/antopatrex1" target="_blank" rel="noopener">X</a>
-      <a href="https://github.com/antopatrex1" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://www.linkedin.com/in/antopatrex/" target="_blank" rel="noopener">LinkedIn</a>
+  <section class="notebook-section" id="notebook" aria-labelledby="notebook-title"><div class="wrap section">
+    <div class="section-heading"><div><p class="eyebrow">04 / NOTES IN THE MARGINS</p><h2 id="notebook-title">Things I’m<br><em>thinking about.</em></h2></div><a class="text-link" href="https://www.linkedin.com/in/antopatrex/recent-activity/all/" target="_blank" rel="noopener noreferrer">More on LinkedIn <span aria-hidden="true">↗</span></a></div>
+    <div class="notes-list">
+      <a class="note-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7503844745211813888/" target="_blank" rel="noopener noreferrer"><span class="note-category">CONTROL SYSTEMS</span><h3>Intelligence sets the intent.<br>Control handles the contact.</h3><p>Why learned policies and classical control belong in the same conversation.</p><span class="note-arrow" aria-label="Read on LinkedIn">↗</span></a>
+      <a class="note-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7502757578767245312/" target="_blank" rel="noopener noreferrer"><span class="note-category">PHYSICAL AI</span><h3>The quieter work<br>of keeping robots running.</h3><p>Telemetry, observability, and the infrastructure behind useful machines.</p><span class="note-arrow" aria-label="Read on LinkedIn">↗</span></a>
+      <a class="note-link" href="https://www.linkedin.com/feed/update/urn:li:activity:7503276356877701120/" target="_blank" rel="noopener noreferrer"><span class="note-category">BUILDING IN PUBLIC</span><h3>A tabletop.<br>A camera. A digital twin.</h3><p>A hackathon experiment in connecting real-world scenes with robot simulation.</p><span class="note-arrow" aria-label="Read on LinkedIn">↗</span></a>
     </div>
-    <div class="colo">San Francisco &middot; Open to conversations about physical AI, deployment, and buildings that need one</div>
-  </div>
-
-</div>
-
-<script>
-(function () {
-  var cv = document.getElementById('arm');
-  if (!cv) return;
-  var ctx = cv.getContext('2d');
-  var L = [82, 66, 46];
-  var th = [-0.5, 0.7, 0.5];
-  var out = [document.getElementById('j0'), document.getElementById('j1'), document.getElementById('j2')];
-  var erEl = document.getElementById('er');
-  var hzEl = document.getElementById('hz');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  function size() {
-    var r = cv.getBoundingClientRect();
-    var d = window.devicePixelRatio || 1;
-    cv.width = Math.max(1, Math.round(r.width * d));
-    cv.height = Math.max(1, Math.round(r.height * d));
-    ctx.setTransform(d, 0, 0, d, 0, 0);
-    return { w: r.width, h: r.height };
-  }
-  var dim = size();
-  window.addEventListener('resize', function () { dim = size(); });
-
-  function fk(bx, by) {
-    var pts = [{ x: bx, y: by }], a = 0, x = bx, y = by;
-    for (var i = 0; i < 3; i++) { a += th[i]; x += Math.cos(a) * L[i]; y += Math.sin(a) * L[i]; pts.push({ x: x, y: y }); }
-    return pts;
-  }
-
-  function ccd(bx, by, tx, ty) {
-    for (var pass = 0; pass < 2; pass++) {
-      for (var i = 2; i >= 0; i--) {
-        var p = fk(bx, by), e = p[3], j = p[i];
-        var a1 = Math.atan2(e.y - j.y, e.x - j.x);
-        var a2 = Math.atan2(ty - j.y, tx - j.x);
-        var d = a2 - a1;
-        while (d > Math.PI) d -= 2 * Math.PI;
-        while (d < -Math.PI) d += 2 * Math.PI;
-        th[i] += d * 0.34;
-      }
-    }
-  }
-
-  var t = 0, frames = 0, last = performance.now(), trail = [];
-
-  function draw() {
-    var w = dim.w, h = dim.h;
-    var bx = w * 0.26, by = h * 0.72;
-    t += reduce ? 0 : 0.014;
-
-    var tx = bx + 92 + Math.cos(t * 0.9) * 62;
-    var ty = by - 74 + Math.sin(t * 1.4) * 54;
-    ccd(bx, by, tx, ty);
-    var p = fk(bx, by);
-
-    ctx.clearRect(0, 0, w, h);
-
-    ctx.strokeStyle = 'rgba(255,176,46,0.055)';
-    ctx.lineWidth = 1;
-    for (var gx = 0; gx < w; gx += 26) { ctx.beginPath(); ctx.moveTo(gx + .5, 0); ctx.lineTo(gx + .5, h); ctx.stroke(); }
-    for (var gy = 0; gy < h; gy += 26) { ctx.beginPath(); ctx.moveTo(0, gy + .5); ctx.lineTo(w, gy + .5); ctx.stroke(); }
-
-    trail.push({ x: p[3].x, y: p[3].y });
-    if (trail.length > 130) trail.shift();
-    for (var k = 1; k < trail.length; k++) {
-      ctx.strokeStyle = 'rgba(255,176,46,' + (k / trail.length * 0.3) + ')';
-      ctx.lineWidth = 1.2;
-      ctx.beginPath(); ctx.moveTo(trail[k - 1].x, trail[k - 1].y); ctx.lineTo(trail[k].x, trail[k].y); ctx.stroke();
-    }
-
-    ctx.strokeStyle = 'rgba(255,176,46,0.34)';
-    ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.arc(tx, ty, 13, 0, Math.PI * 2); ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(tx - 20, ty); ctx.lineTo(tx - 7, ty);
-    ctx.moveTo(tx + 7, ty); ctx.lineTo(tx + 20, ty);
-    ctx.moveTo(tx, ty - 20); ctx.lineTo(tx, ty - 7);
-    ctx.moveTo(tx, ty + 7); ctx.lineTo(tx, ty + 20);
-    ctx.stroke();
-
-    ctx.strokeStyle = '#2B343E';
-    ctx.lineWidth = 9; ctx.lineCap = 'round';
-    ctx.beginPath(); ctx.moveTo(p[0].x, p[0].y);
-    for (var m = 1; m < p.length; m++) ctx.lineTo(p[m].x, p[m].y);
-    ctx.stroke();
-
-    ctx.strokeStyle = '#FFB02E'; ctx.lineWidth = 2.4;
-    ctx.beginPath(); ctx.moveTo(p[0].x, p[0].y);
-    for (var n = 1; n < p.length; n++) ctx.lineTo(p[n].x, p[n].y);
-    ctx.stroke();
-
-    for (var q = 0; q < p.length; q++) {
-      var lastJ = q === p.length - 1;
-      ctx.fillStyle = '#090B0E';
-      ctx.beginPath(); ctx.arc(p[q].x, p[q].y, lastJ ? 6 : 5.5, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#FFB02E'; ctx.lineWidth = lastJ ? 2.4 : 1.6;
-      ctx.beginPath(); ctx.arc(p[q].x, p[q].y, lastJ ? 6 : 5.5, 0, Math.PI * 2); ctx.stroke();
-    }
-
-    ctx.fillStyle = '#454F5A';
-    ctx.fillRect(bx - 26, by + 8, 52, 4);
-
-    var dx = p[3].x - tx, dy = p[3].y - ty;
-    var err = Math.sqrt(dx * dx + dy * dy);
-    frames++;
-    var now = performance.now();
-    if (now - last > 320) {
-      for (var z = 0; z < 3; z++) out[z].textContent = (th[z] * 180 / Math.PI).toFixed(1) + '°';
-      erEl.textContent = err.toFixed(2);
-      hzEl.textContent = Math.round(frames * 1000 / (now - last)) + ' fps';
-      frames = 0; last = now;
-    }
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-})();
-</script>
+  </div></section>
+  <section class="contact-section wrap section" id="hello" aria-labelledby="contact-title">
+    <div class="contact-copy"><p class="eyebrow">GOOD CONVERSATIONS BUILD GOOD THINGS</p><h2 id="contact-title">Working on something<br><em>that should exist?</em></h2><p>Robotics, AI, an interesting engineering problem, or an idea you can’t leave alone — I’d love to hear about it.</p><a class="contact-email" href="mailto:anto@cosmicbrain.ai">anto@cosmicbrain.ai <span aria-hidden="true">↗</span></a><div class="contact-links"><a href="https://www.linkedin.com/in/antopatrex/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/antopatrex1" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://x.com/antopatrex1" target="_blank" rel="noopener noreferrer">X ↗</a></div></div>
+    <figure class="sf-postcard"><img src="assets/san-francisco.jpg" width="800" height="200" alt="Golden Gate Bridge above the fog in San Francisco, from Anto’s LinkedIn cover photo" loading="lazy"><figcaption><span>Greetings from San Francisco.</span><span class="postcard-sign">Anto</span></figcaption></figure>
+  </section>
+</main>
+<footer class="footer wrap"><a class="wordmark" href="#home">anto patrex<span class="wordmark-dot">.</span></a><p>Built with curiosity. Still a work in progress.</p><a href="#home">Back to top ↑</a></footer>
 </body>
 </html>
